@@ -1,0 +1,62 @@
+import 'dart:async';
+
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+
+import '../../repositories/repositories.dart';
+
+part 'bottom_navigation_event.dart';
+part 'bottom_navigation_state.dart';
+
+class BottomNavigationBloc
+    extends Bloc<BottomNavigationEvent, BottomNavigationState> {
+  BottomNavigationBloc(
+      {required this.mapPageRepository,
+      required this.addLocationPageRepository})
+      : super(PageLoading());
+
+  final MapPageRepository mapPageRepository;
+  final AddLocationPageRepository addLocationPageRepository;
+
+  int currentIndex = 0;
+
+  @override
+  Stream<BottomNavigationState> mapEventToState(
+      BottomNavigationEvent event) async* {
+    if (event is AppStarted) {
+      this.add(PageTapped(index: this.currentIndex));
+    }
+    if (event is PageTapped) {
+      this.currentIndex = event.index;
+      yield CurrentIndexChanged(currentIndex: this.currentIndex);
+      yield PageLoading();
+
+      if (this.currentIndex == 0) {
+        String data = await _getMapPageData();
+        yield MapPageLoaded(text: data);
+      }
+      if (this.currentIndex == 1) {
+        int data = await _getAddLocationPageData();
+        yield AddLocationPageLoaded(number: data);
+      }
+    }
+  }
+
+  Future<String> _getMapPageData() async {
+    String data = mapPageRepository.data;
+    if (data == '') {
+      await mapPageRepository.fetchData();
+      data = mapPageRepository.data;
+    }
+    return data;
+  }
+
+  Future<int> _getAddLocationPageData() async {
+    int data = addLocationPageRepository.data;
+    if (data == 0) {
+      await addLocationPageRepository.fetchData();
+      data = addLocationPageRepository.data;
+    }
+    return data;
+  }
+}
