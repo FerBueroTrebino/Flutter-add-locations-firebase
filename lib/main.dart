@@ -6,7 +6,8 @@ import 'blocs/bottom_navigation/bottom_navigation_bloc.dart';
 import 'ui/app_screen.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'generated/l10n.dart';
 import 'repositories/repositories.dart';
 
 class SimpleBlocObserver extends BlocObserver {
@@ -36,6 +37,19 @@ class App extends StatelessWidget {
         )..add(AppStarted()),
         child: AppScreen(),
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        AppLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.delegate.supportedLocales,
     );
   }
 }
+
+
+// 1 - PONER IDIOMAS
+// 2 - PONER MAPA
+// 3 - Crear firebase db e instalarla
+// 4 - Conectar firebase con streams
