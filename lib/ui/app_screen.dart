@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_add_locations_firebase/generated/l10n.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../blocs/bottom_navigation/bottom_navigation_bloc.dart';
-import 'pages/map_page.dart';
+import 'package:flutter_add_locations_firebase/generated/l10n.dart';
+
 import 'pages/add_location_page.dart';
+import 'pages/map_page.dart';
 
 class AppScreen extends StatelessWidget {
   @override
@@ -23,10 +22,12 @@ class AppScreen extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           }
           if (state is MapPageLoaded) {
-            return MapPage(text: state.text);
+            return MapPage(
+              userLocation: state.userLocation,
+            );
           }
           if (state is AddLocationPageLoaded) {
-            return AddLocationPage(number: state.number);
+            return AddLocationPage(userLocation: state.userLocation);
           }
           return Container();
         },

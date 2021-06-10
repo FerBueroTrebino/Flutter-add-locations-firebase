@@ -22,19 +22,19 @@ class PageLoading extends BottomNavigationState {
 }
 
 class MapPageLoaded extends BottomNavigationState {
-  final String text;
+  final LatLng userLocation;
 
-  MapPageLoaded({required this.text});
+  MapPageLoaded({required this.userLocation});
 
   @override
-  String toString() => 'FirstPageLoaded with text: $text';
+  String toString() => 'FirstPageLoaded with text: $userLocation';
 }
 
 class AddLocationPageLoaded extends BottomNavigationState {
-  final int number;
+  final LatLng userLocation;
 
-  AddLocationPageLoaded({required this.number});
+  AddLocationPageLoaded({required this.userLocation});
 
   @override
-  String toString() => 'SecondPageLoaded with number: $number';
+  String toString() => 'SecondPageLoaded with number: $userLocation';
 }

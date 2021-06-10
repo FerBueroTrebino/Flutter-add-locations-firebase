@@ -30,8 +30,13 @@ dependencies:
   bloc: ^7.0.0
   equatable: ^2.0.0
   flutter_bloc: ^7.0.0
-  meta: ^1.2.4
   google_fonts: ^2.1.0
+  google_maps_flutter: ^2.0.6
+  location: ^4.2.1
+  cloud_firestore: ^2.2.1
+  firebase_core: ^1.2.1
+
+
 
   flutter_localizations:
     sdk: flutter

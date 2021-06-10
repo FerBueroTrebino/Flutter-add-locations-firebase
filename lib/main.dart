@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bloc/bloc.dart';
@@ -24,32 +25,38 @@ void main() {
 }
 
 class App extends StatelessWidget {
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        fontFamily: GoogleFonts.montserrat().fontFamily,
-      ),
-      home: BlocProvider<BottomNavigationBloc>(
-        create: (context) => BottomNavigationBloc(
-          mapPageRepository: MapPageRepository(),
-          addLocationPageRepository: AddLocationPageRepository(),
-        )..add(AppStarted()),
-        child: AppScreen(),
-      ),
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        AppLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.delegate.supportedLocales,
+    return FutureBuilder(
+      // Initialize FlutterFire
+      future: Firebase.initializeApp(),
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          return Text('ERROR AL INICIAR FIREBASE');
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+            theme: ThemeData(
+              fontFamily: GoogleFonts.montserrat().fontFamily,
+            ),
+            home: BlocProvider<BottomNavigationBloc>(
+              create: (context) => BottomNavigationBloc(
+                mapPageRepository: MapPageRepository(),
+                addLocationPageRepository: AddLocationPageRepository(),
+              )..add(AppStarted()),
+              child: AppScreen(),
+            ),
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              AppLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.delegate.supportedLocales,
+          );
+        }
+        return CircularProgressIndicator();
+      },
     );
   }
 }
-
-
-// 1 - PONER IDIOMAS
-// 2 - PONER MAPA
-// 3 - Crear firebase db e instalarla
-// 4 - Conectar firebase con streams

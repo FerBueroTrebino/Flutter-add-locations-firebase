@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1061865601351",
+    "project_id": "carrotslabtest",
+    "storage_bucket": "carrotslabtest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061865601351:android:bf60e4c2ec75f06ecfb462",
+        "android_client_info": {
+          "package_name": "com.example.flutter_add_locations_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061865601351-b2fou7c92rk2m16u9vicl0rr102tbd1k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3l-20uIS4r6n9qRN48DXB8dk3i1ka1aQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061865601351-b2fou7c92rk2m16u9vicl0rr102tbd1k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

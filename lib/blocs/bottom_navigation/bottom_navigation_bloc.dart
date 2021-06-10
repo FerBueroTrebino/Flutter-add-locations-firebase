@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../repositories/repositories.dart';
 
@@ -32,31 +33,29 @@ class BottomNavigationBloc
       yield PageLoading();
 
       if (this.currentIndex == 0) {
-        String data = await _getMapPageData();
-        yield MapPageLoaded(text: data);
+        LatLng data = await _getMapPageData();
+        yield MapPageLoaded(userLocation: data);
       }
       if (this.currentIndex == 1) {
-        int data = await _getAddLocationPageData();
-        yield AddLocationPageLoaded(number: data);
+        LatLng data = await _getAddLocationPageData();
+        yield AddLocationPageLoaded(userLocation: data);
       }
     }
   }
 
-  Future<String> _getMapPageData() async {
-    String data = mapPageRepository.data;
-    if (data == '') {
-      await mapPageRepository.fetchData();
-      data = mapPageRepository.data;
-    }
+  Future<LatLng> _getMapPageData() async {
+    LatLng data = mapPageRepository.data;
+    await mapPageRepository.getUserLocation();
+    data = mapPageRepository.data;
+
     return data;
   }
 
-  Future<int> _getAddLocationPageData() async {
-    int data = addLocationPageRepository.data;
-    if (data == 0) {
-      await addLocationPageRepository.fetchData();
-      data = addLocationPageRepository.data;
-    }
+  Future<LatLng> _getAddLocationPageData() async {
+    LatLng data = addLocationPageRepository.data;
+    await addLocationPageRepository.getUserLocation();
+    data = addLocationPageRepository.data;
+
     return data;
   }
 }
